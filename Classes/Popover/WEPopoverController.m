@@ -234,33 +234,43 @@
 #pragma mark - Keyboard handlers
 
 - (void)updateContainerView:(NSNotification*)keyboardNotification{
-        
-        // Get keyboard rect.
-        NSDictionary* userInfo = [keyboardNotification userInfo];
-        CGRect keyboardEndFrame;
-        [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
-        // Convert coordinates.
     
-        keyboardEndFrame = [anchorView convertRect:keyboardEndFrame fromView:nil];
-        
-        // Figure out new visible area.
-        CGRect displayArea = [self displayAreaForView:anchorView];
-        CGRect intersection = CGRectIntersection(displayArea, keyboardEndFrame);
-        if (!CGRectIsNull(intersection)) {
-            displayArea.size.height -= intersection.size.height;
-        }
-        
-        // Update container view.
-        WEPopoverContainerView *containerView = (WEPopoverContainerView *)self.view;
-        [containerView updatePositionWithAnchorRect:anchorRect 
-                                        displayArea:displayArea
-                           permittedArrowDirections:permittedArrowDirections];
-        popoverArrowDirection = containerView.arrowDirection;
-        containerView.frame = [anchorView convertRect:containerView.frame toView:backgroundView];
-        // Make sure drawRect gets called again.
-        [containerView setNeedsDisplay];
-        
+    // Get keyboard rect.
+    NSDictionary* userInfo = [keyboardNotification userInfo];
+    CGRect keyboardEndFrame;
+    [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+    // Convert coordinates.
+    
+    // Usually if the keyboard is dismissing the view will also go away, so may was well not resize.
+    if (keyboardEndFrame.origin.y != 0 || keyboardEndFrame.origin.x != 0) return;
+    
+    keyboardEndFrame = [anchorView convertRect:keyboardEndFrame fromView:nil];
+    
+    // Figure out new visible area.
+    CGRect displayArea = [self displayAreaForView:anchorView];
+    CGRect intersection = CGRectIntersection(displayArea, keyboardEndFrame);
+    if (!CGRectIsNull(intersection)) {
+        displayArea.size.height -= intersection.size.height;
     }
+
+    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    UIViewAnimationCurve animationCurve;
+    [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+    
+    [UIView animateWithDuration:duration
+                          delay:0 
+                        options:animationCurve | UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         
+                         // Update container view.
+                         WEPopoverContainerView *containerView = (WEPopoverContainerView *)self.view;
+                         [containerView updateDisplayArea:displayArea];
+                         containerView.frame = [anchorView convertRect:containerView.frame toView:backgroundView];
+                     
+     } completion:^(BOOL finished) {
+         
+     }];
+}
 
 - (void)keyboardWillShow:(NSNotification*)notification{
         [self updateContainerView:notification];

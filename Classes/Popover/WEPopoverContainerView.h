@@ -26,6 +26,12 @@
 	NSInteger leftBgCapSize;
 	CGFloat arrowMargin;
 }
+typedef enum {
+	WEPopoverCheckBoundsLeft,
+    WEPopoverCheckBoundsRight,
+    WEPopoverCheckBoundsBottom,
+    WEPopoverCheckBoundsTop,
+} WEPopoverCheckBounds;
 
 @property(nonatomic, retain) NSString *bgImageName;
 @property(nonatomic, retain) NSString *upArrowImageName;
@@ -43,6 +49,16 @@
 @property(nonatomic, assign) NSInteger topBgCapSize;
 @property(nonatomic, assign) NSInteger leftBgCapSize;
 @property(nonatomic, assign) CGFloat arrowMargin;
+typedef enum {
+    WEPopoverShiftLeft,
+    WEPopoverShiftRight,
+    WEPopoverShiftDown,
+    WEPopoverShiftUp,
+    WEPopoverCutLeft,
+    WEPopoverCutRight,
+    WEPopoverCutTop,
+    WEPopoverCutBottom
+} WEPopoverFixAction;
 
 @end
 
@@ -59,13 +75,27 @@
 	
 	UIPopoverArrowDirection arrowDirection;
 	
-	CGRect arrowRect;
-	CGRect bgRect;
-	CGPoint offset;
-	CGPoint arrowOffset;
-	
-	CGSize correctedSize;
+    CGRect originalAnchorRect;
+	CGSize originalSize;
 	UIView *contentView;
+    CGRect contentRect;
+    CGRect backgroundRect;
+    float arrowOffset;
+    
+    CGRect leftOfArrowRect;
+    CGRect rightOfArrowRect;
+    CGRect sideOfArrowStretchRect;
+    CGRect arrowRect;
+    CGRect midStretchRect;
+    CGRect oppositeOfArrowStretchRect;
+    
+    UIImageView *leftOfArrow;
+    UIImageView *rightOfArrow;
+    UIImageView *leftSideOfArrowStretch;
+    UIImageView *rightSideOfArrowStretch;
+    UIImageView *midStretch;
+    UIImageView *oppositeOfArrowStretch;
+    UIImageView *arrow;
 }
 
 /**
@@ -94,5 +124,10 @@ permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections
 - (void)updatePositionWithAnchorRect:(CGRect)anchorRect 
 						 displayArea:(CGRect)displayArea
 			permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections;	
+
+/**
+ * @brief Updates the display area using existing anchorRect and arrowDirection. So that you can animate between positions.
+ */
+- (void)updateDisplayArea:(CGRect)displayArea;
 
 @end
