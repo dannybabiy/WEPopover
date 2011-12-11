@@ -370,6 +370,11 @@ permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections {
 }
 
 - (UIImage *)croppedImage:(UIImage*)image rect:(CGRect)rect {
+    // Adjust rect to work with the proper scale.
+    rect.origin.x *= image.scale;
+    rect.origin.y *= image.scale;
+    rect.size.width *= image.scale;
+    rect.size.height *= image.scale;
     CGImageRef croppedImg = CGImageCreateWithImageInRect([image CGImage], rect);
     UIImage *img = [UIImage imageWithCGImage:croppedImg scale:image.scale orientation:image.imageOrientation];
     CGImageRelease(croppedImg);
