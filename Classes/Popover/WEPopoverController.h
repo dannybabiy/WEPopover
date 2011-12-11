@@ -31,7 +31,6 @@
 	UIPopoverArrowDirection popoverArrowDirection;
 	id <WEPopoverControllerDelegate> delegate;
 	CGSize popoverContentSize;
-	WEPopoverContainerViewProperties *containerViewProperties;
 	id <NSObject> context;
 	NSArray *passthroughViews;	
     
@@ -47,7 +46,6 @@
 @property (nonatomic, readonly) UIPopoverArrowDirection popoverArrowDirection;
 @property (nonatomic, assign) id <WEPopoverControllerDelegate> delegate;
 @property (nonatomic, assign) CGSize popoverContentSize;
-@property (nonatomic, retain) WEPopoverContainerViewProperties *containerViewProperties;
 @property (nonatomic, retain) id <NSObject> context;
 @property (nonatomic, copy) NSArray *passthroughViews;
 @property (nonatomic, retain) UIView *anchorView;

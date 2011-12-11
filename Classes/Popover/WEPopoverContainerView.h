@@ -8,24 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-/**
- * @brief Properties for the container view determining the area where the actual content view can/may be displayed. Also Images can be supplied for the arrow images and background.
- */
-@interface WEPopoverContainerViewProperties : NSObject
-{
-	NSString *bgImageName;
-	NSString *upArrowImageName;
-	NSString *downArrowImageName;
-	NSString *leftArrowImageName;
-	NSString *rightArrowImageName;
-	CGFloat leftBgMargin;
-	CGFloat rightBgMargin;
-	CGFloat topBgMargin;
-	CGFloat bottomBgMargin;
-	NSInteger topBgCapSize;
-	NSInteger leftBgCapSize;
-	CGFloat arrowMargin;
-}
 typedef enum {
 	WEPopoverCheckBoundsLeft,
     WEPopoverCheckBoundsRight,
@@ -33,22 +15,6 @@ typedef enum {
     WEPopoverCheckBoundsTop,
 } WEPopoverCheckBounds;
 
-@property(nonatomic, retain) NSString *bgImageName;
-@property(nonatomic, retain) NSString *upArrowImageName;
-@property(nonatomic, retain) NSString *downArrowImageName;
-@property(nonatomic, retain) NSString *leftArrowImageName;
-@property(nonatomic, retain) NSString *rightArrowImageName;
-@property(nonatomic, assign) CGFloat leftBgMargin;
-@property(nonatomic, assign) CGFloat rightBgMargin;
-@property(nonatomic, assign) CGFloat topBgMargin;
-@property(nonatomic, assign) CGFloat bottomBgMargin;
-@property(nonatomic, assign) CGFloat leftContentMargin;
-@property(nonatomic, assign) CGFloat rightContentMargin;
-@property(nonatomic, assign) CGFloat topContentMargin;
-@property(nonatomic, assign) CGFloat bottomContentMargin;
-@property(nonatomic, assign) NSInteger topBgCapSize;
-@property(nonatomic, assign) NSInteger leftBgCapSize;
-@property(nonatomic, assign) CGFloat arrowMargin;
 typedef enum {
     WEPopoverShiftLeft,
     WEPopoverShiftRight,
@@ -60,7 +26,6 @@ typedef enum {
     WEPopoverCutBottom
 } WEPopoverFixAction;
 
-@end
 
 @class WEPopoverContainerView;
 
@@ -70,8 +35,6 @@ typedef enum {
 @interface WEPopoverContainerView : UIView {
 	UIImage *bgImage;
 	UIImage *arrowImage;
-	
-	WEPopoverContainerViewProperties *properties;
 	
 	UIPopoverArrowDirection arrowDirection;
 	
@@ -109,14 +72,13 @@ typedef enum {
 @property (nonatomic, retain) UIView *contentView;
 
 /**
- * @brief Initializes the position of the popover with a size, anchor rect, display area and permitted arrow directions and optionally the properties. 
+ * @brief Initializes the position of the popover with a size, anchor rect, display area and permitted arrow directions. 
  * If the last is not supplied the defaults are taken (requires images to be present in bundle representing a black rounded background with partial transparency).
  */
 - (id)initWithSize:(CGSize)theSize 
 		anchorRect:(CGRect)anchorRect 
 	   displayArea:(CGRect)displayArea
-permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections
-		properties:(WEPopoverContainerViewProperties *)properties;	
+permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections;	
 
 /**
  * @brief To update the position of the popover with a new anchor rect, display area and permitted arrow directions

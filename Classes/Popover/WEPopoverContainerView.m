@@ -7,29 +7,12 @@
 //
 
 #import "WEPopoverContainerView.h"
-
-@implementation WEPopoverContainerViewProperties
-
-@synthesize bgImageName, upArrowImageName, downArrowImageName, leftArrowImageName, rightArrowImageName, topBgMargin, bottomBgMargin, leftBgMargin, rightBgMargin, topBgCapSize, leftBgCapSize;
-@synthesize leftContentMargin, rightContentMargin, topContentMargin, bottomContentMargin, arrowMargin;
-
-- (void)dealloc {
-	self.bgImageName = nil;
-	self.upArrowImageName = nil;
-	self.downArrowImageName = nil;
-	self.leftArrowImageName = nil;
-	self.rightArrowImageName = nil;
-	[super dealloc];
-}
-
-@end
 #import <QuartzCore/QuartzCore.h>
 
 @interface WEPopoverContainerView(Private)
 
 - (void)determineGeometryForSize:(CGSize)theSize anchorRect:(CGRect)anchorRect displayArea:(CGRect)displayArea permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections;
 - (CGSize)contentSize;
-- (void)setProperties:(WEPopoverContainerViewProperties *)props;
 - (void)initView;
 - (void)layoutView;
 
@@ -47,11 +30,10 @@
 - (id)initWithSize:(CGSize)theSize 
 		anchorRect:(CGRect)anchorRect 
 	   displayArea:(CGRect)displayArea
-permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections
-		properties:(WEPopoverContainerViewProperties *)theProperties {
-	if ((self = [super initWithFrame:CGRectZero])) {
+permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections {
+	
+    if ((self = [super initWithFrame:CGRectZero])) {
 		
-		[self setProperties:theProperties];
 		originalSize = theSize;	
         originalAnchorRect = anchorRect;
 		[self determineGeometryForSize:originalSize 
@@ -68,7 +50,6 @@ permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections
 }
 
 - (void)dealloc {
-	[properties release];
 	[contentView release];
 	[bgImage release];
 	[arrowImage release];
