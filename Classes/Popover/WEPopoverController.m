@@ -236,10 +236,6 @@
     CGRect keyboardEndFrame;
     [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
     // Convert coordinates.
-    
-    // Usually if the keyboard is dismissing the view will also go away, so may was well not resize.
-    if (keyboardEndFrame.origin.y != 0 || keyboardEndFrame.origin.x != 0) return;
-    
     keyboardEndFrame = [anchorView convertRect:keyboardEndFrame fromView:nil];
     
     // Figure out new visible area.
