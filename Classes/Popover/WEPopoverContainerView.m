@@ -49,12 +49,6 @@ permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections {
 	return self;
 }
 
-- (void)dealloc {
-	[contentView release];
-	[bgImage release];
-	[arrowImage release];
-	[super dealloc];
-}
 
 - (void)updateDisplayArea:(CGRect)displayArea {
     [self determineGeometryForSize:originalSize 
@@ -98,8 +92,7 @@ permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections {
 
 - (void)setContentView:(UIView *)v {
 	if (v != contentView) {
-		[contentView release];
-		contentView = [v retain];		
+		contentView = v;		
 		contentView.frame = contentRect;
         contentView.autoresizingMask = UIViewAutoresizingNone;
         contentView.layer.cornerRadius = 4;
@@ -177,7 +170,7 @@ permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections {
     int topSideArrowPadding = 25;
     int bottomSideArrowPadding = 10;
     float arrowWidth = 27.0;
-    float position;
+    float position = 0;
     switch (direction) {
         case UIPopoverArrowDirectionUp:
         case UIPopoverArrowDirectionDown:

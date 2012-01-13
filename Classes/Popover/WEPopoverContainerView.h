@@ -69,7 +69,7 @@ typedef enum {
 /**
  * @brief The content view being displayed.
  */
-@property (nonatomic, retain) UIView *contentView;
+@property (nonatomic, strong) UIView *contentView;
 
 /**
  * @brief Initializes the position of the popover with a size, anchor rect, display area and permitted arrow directions. 
