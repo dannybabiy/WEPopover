@@ -207,6 +207,15 @@
 	containerView.frame = [theView convertRect:containerView.frame toView:backgroundView];
 }
 
+- (void)setPopoverContentSize:(CGSize)size animated:(BOOL)animated {
+	CGRect displayArea = [self displayAreaForView:anchorView];
+	WEPopoverContainerView *containerView = (WEPopoverContainerView *)self.view;	
+	[UIView animateWithDuration:animated ? .3 : 0 animations:^{
+		[containerView updateDisplayArea:displayArea newSize:size];
+		containerView.frame = [anchorView convertRect:containerView.frame toView:backgroundView];
+	}];
+}
+
 #pragma mark -
 #pragma mark WETouchableViewDelegate implementation
 

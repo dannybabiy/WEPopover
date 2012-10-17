@@ -67,4 +67,6 @@
 						   inView:(UIView *)view
 		 permittedArrowDirections:(UIPopoverArrowDirection)arrowDirections;
 
+- (void)setPopoverContentSize:(CGSize)size animated:(BOOL)animated;
+
 @end

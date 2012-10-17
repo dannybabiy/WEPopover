@@ -92,4 +92,6 @@ permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections;
  */
 - (void)updateDisplayArea:(CGRect)displayArea;
 
+- (void)updateDisplayArea:(CGRect)displayArea newSize:(CGSize)size;
+
 @end

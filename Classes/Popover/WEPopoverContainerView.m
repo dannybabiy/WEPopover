@@ -58,6 +58,15 @@ permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections {
     [self layoutView];
 }
 
+- (void)updateDisplayArea:(CGRect)displayArea newSize:(CGSize)size {
+	originalSize = size;
+    [self determineGeometryForSize:size
+                        anchorRect:originalAnchorRect
+                       displayArea:[self correctedDisplayAreaForRect:displayArea]
+          permittedArrowDirections:arrowDirection];
+    [self layoutView];
+}
+
 - (void)updatePositionWithAnchorRect:(CGRect)anchorRect 
 						 displayArea:(CGRect)displayArea
 			permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections {
