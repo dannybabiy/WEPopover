@@ -270,7 +270,7 @@
     }    
 
 - (void)keyboardWillHide:(NSNotification*)notification{
-        [self updateContainerView:notification];
+        //[self updateContainerView:notification]; // Causes buggy tableview animation, needs to be fixed.
     }    
 
 
