@@ -9,6 +9,7 @@
 #import "WEPopoverController.h"
 #import "WEPopoverParentView.h"
 #import "UIBarButtonItem+WEPopover.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define FADE_DURATION 0.25
 
@@ -103,6 +104,8 @@
 			[delegate popoverControllerDidDismissPopover:self];
 		}
 	}
+    
+    self.view.layer.shouldRasterize = NO;
 }
 
 - (void)dismissPopoverAnimated:(BOOL)animated {
@@ -176,6 +179,9 @@
 	[self.view becomeFirstResponder];
 	
 	if (animated) {
+        // Make sure the fade won't reveal all the layers.
+        self.view.layer.shouldRasterize = YES;
+        
 		self.view.alpha = 0.0;
 		
 		[UIView beginAnimations:@"FadeIn" context:nil];
@@ -292,6 +298,7 @@
 - (void)setView:(UIView *)v {
 	if (view != v) {
 		view = v;
+        view.layer.rasterizationScale = [UIScreen mainScreen].scale;
 	}
 }
 
@@ -306,6 +313,9 @@
 		popoverVisible = NO;
 		[self.view resignFirstResponder];
 		if (animated) {
+            
+            // Make sure the fade won't reveal all the layers.
+            self.view.layer.shouldRasterize = YES;
 			
 			self.view.userInteractionEnabled = NO;
 			[UIView beginAnimations:@"FadeOut" context:(__bridge void *)([NSNumber numberWithBool:userInitiated])];
